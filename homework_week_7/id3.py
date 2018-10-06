@@ -130,7 +130,7 @@ def is_pure(s):
     return len(set(s)) == 1
 
 
-def recursive_split(x, y, fields):
+def recursive_split(x, y, fields, current_depth=0):
     # If there could be no split, just return the original set
     if is_pure(y) or len(y) == 0:
         return y
@@ -139,10 +139,13 @@ def recursive_split(x, y, fields):
     gain = np.array([information_gain_ratio(y, x_attr, x_type) for x_attr, x_type in zip(x.T, fields[1])])
 
     selected_attr = np.argmax(gain[:, 0])
-
+    max_depth = 3
     # If there's no gain at all, nothing has to be done, just return the original set
     if np.all(gain[:, 0] < 1e-6):
-        print("hi")
+        return y
+
+    if current_depth > max_depth:
+        print("max depth exceeded")
         return y
 
     # We split using the selected attribute
@@ -156,7 +159,7 @@ def recursive_split(x, y, fields):
         y_subset = y.take(v, axis=0)
         x_subset = x.take(v, axis=0)
 
-        branches[k] = recursive_split(x_subset, y_subset, fields)
+        branches[k] = recursive_split(x_subset, y_subset, fields, current_depth+1)
 
     res = (fields[0][selected_attr], branches)
     return res
@@ -242,6 +245,8 @@ tree = recursive_split(X, y, [fields, fields_types])
 
 print(tree)
 # print(y)
-print(predict(tree, X, [fields, fields_types]) == y)
+prediction = predict(tree, X, [fields, fields_types])
+
+print(len(np.where(prediction == y)[0])/len(prediction))
 
 
