@@ -27,15 +27,9 @@ def gradient_descent(x_array, y_array):
     return b1, b0
 
 
-def b0_partial_derivative(x_array, y_array, b0, b1):
-    """
 
-    :param x_array:
-    :param y_array:
-    :param b0:
-    :param b1:
-    :return:
-    """
+
+def b0_partial_derivative(x_array, y_array, b0, b1):
     result = 0
 
     for x, y in zip(x_array, y_array):
@@ -45,15 +39,6 @@ def b0_partial_derivative(x_array, y_array, b0, b1):
 
 
 def b1_partial_derivative(x_array, y_array, b0, b1):
-    """
-
-    :param x_array:
-    :param y_array:
-    :param b0:
-    :param b1:
-    :return:
-    """
-
     result = 0
 
     for x, y in zip(x_array, y_array):

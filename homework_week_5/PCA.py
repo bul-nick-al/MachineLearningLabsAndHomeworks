@@ -49,6 +49,8 @@ def perform_pca(df):
 
 
 
+
+
 def load_data():
     """
     loads iris data set

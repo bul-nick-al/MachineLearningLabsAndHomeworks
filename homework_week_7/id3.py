@@ -139,7 +139,7 @@ def recursive_split(x, y, fields, current_depth=0):
     gain = np.array([information_gain_ratio(y, x_attr, x_type) for x_attr, x_type in zip(x.T, fields[1])])
 
     selected_attr = np.argmax(gain[:, 0])
-    max_depth = 3
+    max_depth = 100
     # If there's no gain at all, nothing has to be done, just return the original set
     if np.all(gain[:, 0] < 1e-6):
         return y

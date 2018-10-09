@@ -27,4 +27,5 @@ def read_and_clean_data():
 
 
 df = read_and_clean_data()
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.55)
 # X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33)

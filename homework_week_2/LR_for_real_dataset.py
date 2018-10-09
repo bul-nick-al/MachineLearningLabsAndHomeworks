@@ -6,11 +6,14 @@ from lab1.exploring_libraries import split_to_sets
 
 df = pd.read_csv('../mpg.csv')
 
+
+
 df = df.drop('name', axis=1)
 df['origin'] = df['origin'].replace({1: 'america', 2: 'europe', 3: 'asia'})
 df = pd.get_dummies(df, columns=['origin'])
 df = df.replace('?', np.nan)
 df = df.dropna()
+
 
 
 (training_set, testing_set) = split_to_sets(df, 0.25)
