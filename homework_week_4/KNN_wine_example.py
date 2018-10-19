@@ -1,4 +1,5 @@
 import pandas as pd
+from sklearn.decomposition import PCA
 from sklearn.linear_model import Ridge
 from sklearn.linear_model import Lasso
 from sklearn.model_selection import KFold
@@ -8,9 +9,11 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
+
 def read_and_clean_data():
     df = pd.read_csv('wine.csv')
     return df
+
 
 
 def calc_ridge(X, y, alphas, plot):
@@ -61,6 +64,7 @@ def calc_lasso(X, y, alphas, plot):
         plt.xscale('log')
         plt.show()
     return mses
+
 
 
 def knn(X,y, plot):
@@ -131,8 +135,14 @@ knn(X, y, True)
 alphas = [1e-15, 1e-10, 1e-8, 1e-4, 1e-3, 1e-2, 1, 5, 10, 20]
 calc_ridge(X, y, alphas, True)
 calc_lasso(X, y, alphas, True)
-compare(X, y, 1e-2, 1e-4, 20, True)
+compare(X, y, 1e-2, 1e-4, 20, True)\
 
+
+def ani(data_x, data_y, true_b1, true_b0, b1, b0, x_range=(-10, 10), label = ''):
+    plt.scatter(data_x, data_y)
+    plt.plot([x_range[0], x_range[1]],
+             [x_range[0]*true_b1 + true_b0, x_range[1]*true_b1 + true_b0], c='r', linewidth=2, lable='True')
+    plt.plot
 
 
 

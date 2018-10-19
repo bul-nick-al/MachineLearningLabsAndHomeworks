@@ -56,6 +56,7 @@ def animate(data_x, data_y, true_b1, true_b0, b1, b0, x_range=(-10, 10),
     plt.show()
 
 
+
 ### Parameters for data generation ###
 true_b1 = 2.5
 true_b0 = -7

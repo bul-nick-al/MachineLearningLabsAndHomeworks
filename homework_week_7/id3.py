@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 import math
 # code is based on this resource - http://gabrielelanaro.github.io/blog/2016/03/03/decision-trees.html
-
+from sklearn.metrics import accuracy_score
 
 def partition(a):
     return {c: (a == c).nonzero()[0] for c in np.unique(a)}
@@ -130,7 +130,15 @@ def is_pure(s):
     return len(set(s)) == 1
 
 
-def recursive_split(x, y, fields, current_depth=0):
+def recursive_split(x, y, fields, current_depth=0, max_depth=10):
+    """
+    :param x:
+    :param y:
+    :param fields: list with two lists: 1 - features' names, 2 - features' type, true - if numeric, false - categorical
+    :param current_depth:
+    :param max_depth:
+    :return:
+    """
     # If there could be no split, just return the original set
     if is_pure(y) or len(y) == 0:
         return y
@@ -139,13 +147,13 @@ def recursive_split(x, y, fields, current_depth=0):
     gain = np.array([information_gain_ratio(y, x_attr, x_type) for x_attr, x_type in zip(x.T, fields[1])])
 
     selected_attr = np.argmax(gain[:, 0])
-    max_depth = 100
     # If there's no gain at all, nothing has to be done, just return the original set
     if np.all(gain[:, 0] < 1e-6):
         return y
 
+    # tree pruning - we don't let the tree grow in depth more than the max depth
     if current_depth > max_depth:
-        print("max depth exceeded")
+        # print("max depth exceeded")
         return y
 
     # We split using the selected attribute
@@ -159,7 +167,7 @@ def recursive_split(x, y, fields, current_depth=0):
         y_subset = y.take(v, axis=0)
         x_subset = x.take(v, axis=0)
 
-        branches[k] = recursive_split(x_subset, y_subset, fields, current_depth+1)
+        branches[k] = recursive_split(x_subset, y_subset, fields, current_depth=current_depth+1, max_depth=max_depth)
 
     res = (fields[0][selected_attr], branches)
     return res
@@ -233,20 +241,23 @@ def preprocess_data(x, fields_types):
 pd.set_option('display.max_columns', None)
 pd.set_option('display.width', None)
 
-train_set = pd.read_csv(
-    'titanic_modified.csv')
+train_set = pd.read_csv('titanic_modified.csv')
 
-X = train_set.iloc[:, :6].values
-y = train_set.iloc[:, 6].values
 fields = list(train_set.columns.values)
 fields_types = [False, False, True, True, True, False]
-X = preprocess_data(X, fields_types)
-tree = recursive_split(X, y, [fields, fields_types])
 
-print(tree)
-# print(y)
+X = preprocess_data(train_set.iloc[:, :6].values, fields_types)
+y = train_set.iloc[:, 6].values
+
+# I've picked the max depth = 21, because this is the smallest depth, which gives the accuracy > 90%
+tree = recursive_split(X, y, [fields, fields_types], max_depth=21)
 prediction = predict(tree, X, [fields, fields_types])
 
-print(len(np.where(prediction == y)[0])/len(prediction))
+
+print("\n---------------------------------------\nThe tree:\n{}".format(tree))
+print("\n---------------------------------------\nThe predictions:\n{}".format(prediction))
+print("\n---------------------------------------\nThe accuracy of prediction is {}"
+      .format(accuracy_score(y, prediction)))
+
 
 

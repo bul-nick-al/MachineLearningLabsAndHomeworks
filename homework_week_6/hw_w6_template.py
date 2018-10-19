@@ -188,3 +188,4 @@ Y_moon[Y_moon == 0] = -1
 # plt.show()
 minimize_and_plot(X_moon, Y_moon, linear_kernel, C_const, threshold)  # svm with linear kernel
 minimize_and_plot(X_moon, Y_moon, polynomial_kernel, C_const, threshold)  # svm with polynomial kernel
+

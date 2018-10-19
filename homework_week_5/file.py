@@ -59,6 +59,8 @@ restored_data = chosen_eig.T.dot(projected_data)
 ### CONGRATS YOU ARE DONE WITH THE FIRST PART ###
 ############################################
 
+
+
 ### 1 GENERATE DATA
 ### already is done
 

@@ -93,6 +93,7 @@ def part_der_b1(b0, b1, X, Y):
 def sigma(b0, b1, x):
     return np.exp(b0 + b1 * x) / (1 + np.exp(b0 + b1 * x))
 
+
 iris = load_iris()
 print(iris)
 

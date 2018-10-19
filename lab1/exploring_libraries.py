@@ -15,3 +15,4 @@ df = pd.read_csv("/Users/nicholas/Downloads/datasets/iris.csv")
 a = split_to_sets(df, 0.5)
 
 
+
