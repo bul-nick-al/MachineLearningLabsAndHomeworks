@@ -171,7 +171,7 @@ def bottom_up_clustering(merge_func, X_matrix, distances_matrix, threshold=None)
         #         plt.scatter(X_data[X_data[:, 2] == k, 0], X_data[X_data[:, 2] == k, 1], color=color, marker=marker, label=k)
         #     plt.show()
 
-    # todo use the plot below to find the optimal threshold to stop merging clusters
+    # use the plot below to find the optimal threshold to stop merging clusters - DONE
     plt.plot(np.arange(0, num_points - 1, 1), merge_distances[:num_points - 1])
     plt.title("Merge distances over iterations")
     plt.xlabel("Iteration #")
@@ -200,8 +200,8 @@ markers = markers.MarkerStyle.markers
 colormap = plt.cm.Dark2.colors
 
 # performing bottom-up clustering with three different linkage functions
-# todo set your own thresholds for each method.
-# todo find thresholds by looking at plot titled "Merge distances over iterations" when threshold is set to None
+# set your own thresholds for each method. - DONE
+# find thresholds by looking at plot titled "Merge distances over iterations" when threshold is set to None - DONE
 bottom_up_clustering(single_link_merge, X, distances, threshold=10)
 bottom_up_clustering(complete_link_merge, X, distances, threshold=65)
 bottom_up_clustering(average_link_merge, X, distances, threshold=30)
