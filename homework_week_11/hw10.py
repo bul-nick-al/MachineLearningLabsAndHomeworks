@@ -29,7 +29,6 @@ def relu(x):
 
 # the following three methods are the derivatives of of the activation functions
 
-
 def sigmoid_derivative(x):
     return x * (1 - x)
 
@@ -39,7 +38,7 @@ def tanh_derivative(x):
 
 
 def relu_derivative(x):
-    return np.vectorize(lambda x: 1 if x > 0 else 0)(x)
+    return np.greater(x, 0)
 
 
 def generate_data():
